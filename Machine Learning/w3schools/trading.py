@@ -1,9 +1,10 @@
 import numpy
 import matplotlib.pyplot as plt
 import json 
-# quiero hacer regression polineal para el json de BITCO
-#f = open('market-price.json', encoding="utf8") # el json de BITCOIN
-f = open('market-price-all.json') # el json de BITCOIN
+
+# quiero aplicar machine learning al BITCON
+#f = open('market-price-all.json') # el json de BITCOIN
+f = open('oro_mensual.json') # el json de BITCOIN
 data = json.load(f)
 
 print("Encabezados:")
@@ -11,15 +12,32 @@ for x in data:
   print(x)
 print("")
 # declaro la lista 
-x = []
-y = []
+x = []  # aca voy a tener el tiempo en formato int (unix timestamp)
+y = []  # aca voy a tener el precio en dolares
 labels = []
 
 for i in data['values']:
   x.append(i['x'])
   y.append(i['y'])
 #print(x[300]) #1308700800
+#print(len(x)) #1383
+# ya estan los datos cargados
+# ahora tengo que Split Data, dividir los datos en training, validacion, test
+# mi proporcion elegida es training 70% - test %30
+# el 70% de 1383 es 968,1 ~ 968
+# el 30% de 1383 es 414,9 ~ 415
+training = round(len(x) * 0.7)  # round hace una aproximacion
+test = round(len(x) * 0.3)      # round redondea
+print(training) #968 estan bien divididos
 
+entrenamiento = [] 
+prueba = []  
+validacion = []
+"""
+for i in data['values']:
+  x.append(i['x'])
+  y.append(i['y'])
+"""
 #unix timestamp # transformo un int en tiempo
 from datetime import datetime
 for i in x:
